@@ -4,8 +4,9 @@
 @using BlazorServerApp.Services
 @inject IBookStoresService<Publisher> bookStoresService
 @inject IJSRuntime JSRuntime
-@attribute [Authorize(Roles = "Publisher", Policy = "SeniorEmployee")]
 @inherits AuthBase
+
+@attribute [Authorize(Roles = "Publisher", Policy = "SeniorEmployee")]
 
 <div class="col-12">
     <h3><b>Enter Publisher Information</b></h3>

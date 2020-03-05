@@ -14,9 +14,11 @@
     bool IsUserPublisher;
     bool IsSeniorEmployee;
 
+    System.Security.Claims.ClaimsPrincipal user = null;
+
     private async Task FindOutAboutUser()
     {
-        var user = (await authenticationStateTask).User;
+        user = (await authenticationStateTask).User;
 
         if (user.IsInRole("Publisher"))
             IsUserPublisher = true;

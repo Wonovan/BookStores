@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace BookStoresWebAPI.Models
+﻿namespace BookStoresWebAPI.Models
 {
     public partial class Job
     {

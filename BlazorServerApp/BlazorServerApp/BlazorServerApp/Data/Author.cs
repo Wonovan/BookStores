@@ -1,39 +1,35 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BlazorServerApp.Data
 {
     public class Author
-    {   
+    {
         public int AuthorId { get; set; }
-        
+
         [Required(ErrorMessage = "First name is required")]
-        public string FirstName { get; set; }        
+        public string FirstName { get; set; }
         [Required(ErrorMessage = "Last name is required")]
         public string LastName { get; set; }
-        [StringLength(20,ErrorMessage ="Name of the city can not be longer than 20 chars")]
-        
+        [StringLength(20, ErrorMessage = "Name of the city can not be longer than 20 chars")]
+
         public string City { get; set; }
         [Required]
         [DataType(DataType.EmailAddress)]
         [EmailAddress]
         public string EmailAddress { get; set; }
-        
-        [Range(10000,99999999,ErrorMessage ="Salary can not be less than 10000")]
+
+        [Range(10000, 99999999, ErrorMessage = "Salary can not be less than 10000")]
         public int Salary { get; set; }
-        
+
         public string Phone { get; set; }
-        
+
 
         public Author()
         {
 
         }
-        public Author(int authorId, string firstName, string lastName, string emailAddress,int salary,
+        public Author(int authorId, string firstName, string lastName, string emailAddress, int salary,
                     string phoneNumber, string city)
         {
             AuthorId = authorId;

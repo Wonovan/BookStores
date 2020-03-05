@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using BookStoresWebAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using BookStoresWebAPI.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
-using System.Text;
-using System.Security.Claims;
-using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
+using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Security.Claims;
 using System.Security.Cryptography;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace BookStoresWebAPI.Controllers
 {
@@ -142,7 +140,7 @@ namespace BookStoresWebAPI.Controllers
 
                 return userWithToken;
             }
-            
+
             return null;
         }
 
@@ -163,7 +161,7 @@ namespace BookStoresWebAPI.Controllers
         private bool ValidateRefreshToken(User user, string refreshToken)
         {
 
-            RefreshToken refreshTokenUser =  _context.RefreshTokens.Where(rt => rt.Token == refreshToken)
+            RefreshToken refreshTokenUser = _context.RefreshTokens.Where(rt => rt.Token == refreshToken)
                                                 .OrderByDescending(rt => rt.ExpiryDate)
                                                 .FirstOrDefault();
 

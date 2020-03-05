@@ -9,12 +9,23 @@
     [CascadingParameter]
     protected Task<AuthenticationState> authenticationStateTask { get; set; }
 
+    protected override void OnInitialized()
+    {
+        var claimsPrincipal = authenticationStateTask.Result.User;
+
+        if (!claimsPrincipal.Identity.IsAuthenticated)
+            NavigationManager.NavigateTo("/");
+
+        base.OnInitialized();
+    }
+
+
     protected override async Task OnInitializedAsync()
     {
         var claimsPrincipal = (await authenticationStateTask).User;
 
         if (!claimsPrincipal.Identity.IsAuthenticated)
-            NavigationManager.NavigateTo("/login");
+            NavigationManager.NavigateTo("/");
 
         await base.OnInitializedAsync();
     }

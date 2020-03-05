@@ -1,24 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Blazored.LocalStorage;
+using BlazorServerApp.Data;
+using BlazorServerApp.Handlers;
+using BlazorServerApp.Services;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using BlazorServerApp.Data;
-using EmbeddedBlazorContent;
 using System.Net.Http;
-using Microsoft.AspNetCore.Components.Authorization;
-using Blazored.LocalStorage;
-using BlazorServerApp.Services;
-using BlazorServerApp.Handlers;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Http;
 
 namespace BlazorServerApp
 {
@@ -45,7 +35,7 @@ namespace BlazorServerApp
             services.AddTransient<ValidateHeaderHandler>();
 
             services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
-            
+
             services.AddBlazoredLocalStorage();
             services.AddHttpClient<IUserService, UserService>();
 
@@ -56,11 +46,11 @@ namespace BlazorServerApp
 
             services.AddSingleton<HttpClient>();
 
-            services.AddAuthorization(options => 
+            services.AddAuthorization(options =>
             {
-                options.AddPolicy("SeniorEmployee", policy => 
-                    policy.RequireClaim("IsUserEmployedBefore1990","true"));
-            });            
+                options.AddPolicy("SeniorEmployee", policy =>
+                    policy.RequireClaim("IsUserEmployedBefore1990", "true"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -78,17 +68,17 @@ namespace BlazorServerApp
             }
 
             app.UseHttpsRedirection();
-            app.UseStaticFiles();            
-        
+            app.UseStaticFiles();
+
             app.UseRouting();
 
             app.UseAuthentication();
-            app.UseAuthorization();            
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapBlazorHub();
-                endpoints.MapFallbackToPage("/_Host");                
+                endpoints.MapFallbackToPage("/_Host");
             });
         }
     }

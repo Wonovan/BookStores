@@ -1,24 +1,19 @@
 ﻿using Blazored.LocalStorage;
+using BlazorServerApp.Services;
 using Microsoft.AspNetCore.Components.Authorization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using BlazorServerApp.Services;
-using System.Net.Http;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Identity;
 
 namespace BlazorServerApp.Data
 {
     public class CustomAuthenticationStateProvider : AuthenticationStateProvider
     {
         public ILocalStorageService _localStorageService { get; }
-        public IUserService _userService { get; set; }        
-        private readonly HttpClient _httpClient;        
+        public IUserService _userService { get; set; }
+        private readonly HttpClient _httpClient;
 
-        public CustomAuthenticationStateProvider(ILocalStorageService localStorageService, 
+        public CustomAuthenticationStateProvider(ILocalStorageService localStorageService,
             IUserService userService,
             HttpClient httpClient)
         {
@@ -27,11 +22,11 @@ namespace BlazorServerApp.Data
             _userService = userService;
             _httpClient = httpClient;
         }
-        
+
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
-        {   
-            var accessToken = await _localStorageService.GetItemAsync<string>("accessToken");           
-            
+        {
+            var accessToken = await _localStorageService.GetItemAsync<string>("accessToken");
+
             ClaimsIdentity identity;
 
             if (accessToken != null && accessToken != string.Empty)
@@ -42,9 +37,9 @@ namespace BlazorServerApp.Data
             else
             {
                 identity = new ClaimsIdentity();
-            }          
+            }
 
-            var claimsPrincipal = new ClaimsPrincipal(identity);            
+            var claimsPrincipal = new ClaimsPrincipal(identity);
 
             return await Task.FromResult(new AuthenticationState(claimsPrincipal));
         }
@@ -78,10 +73,10 @@ namespace BlazorServerApp.Data
             var claimsIdentity = new ClaimsIdentity();
 
             if (user.EmailAddress != null)
-            { 
+            {
                 claimsIdentity = new ClaimsIdentity(new[]
                                 {
-                                    new Claim(ClaimTypes.Name, user.EmailAddress),                                   
+                                    new Claim(ClaimTypes.Name, user.EmailAddress),
                                     new Claim(ClaimTypes.Role, user.Role.RoleDesc),
                                     new Claim("IsUserEmployedBefore1990", IsUserEmployedBefore1990(user))
                                 }, "apiauth_type");
