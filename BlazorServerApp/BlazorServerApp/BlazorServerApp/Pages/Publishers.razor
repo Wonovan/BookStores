@@ -4,7 +4,8 @@
 @using BlazorServerApp.Services
 @inject IBookStoresService<Publisher> bookStoresService
 @inject IJSRuntime JSRuntime
-@attribute [Authorize( Roles = "Publisher", Policy="SeniorEmployee")]
+@attribute [Authorize(Roles = "Publisher", Policy = "SeniorEmployee")]
+@inherits AuthBase
 
 <div class="col-12">
     <h3><b>Enter Publisher Information</b></h3>
@@ -30,7 +31,7 @@
             <span class="col-2"></span>
             <input type="submit" class="form-control col-1 btn btn-primary" value="Save" />
             <span>&nbsp;</span>
-            <input type="submit" class="form-control col-1 btn btn-primary" value="Clear" />
+            <input type="reset" class="form-control col-1 btn btn-primary" value="Clear" />
         </div>
 
     </EditForm>
@@ -80,6 +81,7 @@
 
     protected override void OnInitialized()
     {
+        base.OnInitialized();
         publisher = new Publisher();
     }
 

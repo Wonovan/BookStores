@@ -30,6 +30,8 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        await base.OnInitializedAsync();
+
         user = (await authenticationStateTask).User;
 
         if (user.Identity.IsAuthenticated)

@@ -4,6 +4,7 @@
 @using BlazorServerApp.Data
 @using BlazorServerApp.Services
 @inject IBookStoresService<Author> bookStoresService
+@inherits AuthBase
 
 
 <h3>Author Detail</h3>
@@ -30,6 +31,8 @@
 
     protected async override Task OnInitializedAsync()
     {
+        await base.OnInitializedAsync();
+
         //authorService = new AuthorService();
         AuthorDetails = await bookStoresService.GetByIdAsync("authors/", AuthorId);
     }

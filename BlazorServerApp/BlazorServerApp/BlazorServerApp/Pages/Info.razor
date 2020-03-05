@@ -1,7 +1,8 @@
-﻿@page "/counter"
+﻿@page "/info"
+@inherits AuthBase
 @inject IAuthorizationService authorizationService
 
-<h1>Counter</h1>
+<h1>Info</h1>
 
 <button class="btn btn-primary" @onclick="FindOutAboutUser">Find Out About User</button>
 <br />
@@ -10,16 +11,11 @@
 
 @code {
 
-    [CascadingParameter]
-    private Task<AuthenticationState> authenticationStateTask { get; set; }
-
     bool IsUserPublisher;
     bool IsSeniorEmployee;
 
     private async Task FindOutAboutUser()
     {
-        
-        
         var user = (await authenticationStateTask).User;
 
         if (user.IsInRole("Publisher"))
@@ -27,7 +23,5 @@
 
         if ((await authorizationService.AuthorizeAsync(user, "SeniorEmployee")).Succeeded)
             IsSeniorEmployee = true;
-        
-
     }
 }

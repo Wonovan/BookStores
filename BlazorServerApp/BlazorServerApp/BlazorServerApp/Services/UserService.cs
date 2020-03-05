@@ -27,8 +27,13 @@ namespace BlazorServerApp.Services
 
         public async Task<User> LoginAsync(User user)
         {
-            user.Password = Utility.Encrypt(user.Password);
-            string serializedUser = JsonConvert.SerializeObject(user);
+            var AuthUser = new User
+            {
+                Password = Utility.Encrypt(user.Password),
+                EmailAddress = user.EmailAddress
+            };
+
+            string serializedUser = JsonConvert.SerializeObject(AuthUser);
 
             var requestMessage = new HttpRequestMessage(HttpMethod.Post, "Users/Login");
             requestMessage.Content = new StringContent(serializedUser);

@@ -1,0 +1,22 @@
+﻿@using System.Security.Claims
+@inject NavigationManager NavigationManager
+@inherits LayoutComponentBase
+
+@code {
+
+    ClaimsPrincipal claimsPrincipal;
+
+    [CascadingParameter]
+    protected Task<AuthenticationState> authenticationStateTask { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var claimsPrincipal = (await authenticationStateTask).User;
+
+        if (!claimsPrincipal.Identity.IsAuthenticated)
+            NavigationManager.NavigateTo("/login");
+
+        await base.OnInitializedAsync();
+    }
+
+}

@@ -3,10 +3,14 @@
 @using BlazorServerApp.Services
 @using CuriousDriveRazorLibrary
 @using Blazored.LocalStorage
+@using BlazorServerApp.Shared 
+
 @inject IBookStoresService<Author> bookStoresService
 @inject IUserService userService
 @inject ILocalStorageService localStorageService
 @inject IJSRuntime JSRuntime
+
+@inherits AuthBase
 @implements IDisposable
 
 <div class="col-12">
@@ -47,7 +51,7 @@
             <span class="col-2"></span>
             <input type="submit" class="form-control col-1 btn btn-primary" value="Save" />
             <span>&nbsp;</span>
-            <input type="submit" class="form-control col-1 btn btn-primary" value="Clear" />
+            <input type="reset" class="form-control col-1 btn btn-primary" value="Clear" />
         </div>
     </EditForm>
 </div>
@@ -118,12 +122,14 @@
 
     protected override void OnInitialized()
     {
+        base.OnInitialized();
         Console.WriteLine("Authors - OnInitialized");
         base.OnInitialized();
     }
 
     protected override async Task OnInitializedAsync()
     {
+        await base.OnInitializedAsync();
         Console.WriteLine("Authors - OnInitializedAsync");
 
         author = new Author();
